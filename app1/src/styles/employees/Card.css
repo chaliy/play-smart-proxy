@@ -1,0 +1,9 @@
+.card-component .employee-member {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.card-component .employee-member img {
+  margin: 0 auto;
+  border: 7px solid #fff;
+}
