@@ -1,1 +1,1 @@
-# play-secret-proxy
+# play-smart-proxy

@@ -1,0 +1,24 @@
+{
+  "name": "play-smart-proxy-service1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo Service 1",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.12.3",
+    "swagger-express-mw": "^0.1.0",
+    "jsonfile": "^2.3.1"
+  },
+  "devDependencies": {
+    "faker": "^3.1.0",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "swagger project test"
+  }
+}
