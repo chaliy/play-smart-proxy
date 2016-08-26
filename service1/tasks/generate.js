@@ -3,6 +3,7 @@
 let faker = require('faker');
 let moment = require('moment');
 let writeJson = require('jsonfile').writeFileSync;
+let uuid = require('uuid').v4;
 let rnd = (min, max) => Math.floor(Math.random() * (max - min) + min);
 let range = max => Array(max).fill();
 let lpad = (number, digits) => ('00000000000000000000000'+number).slice(-digits);
@@ -14,15 +15,24 @@ let generate = () => {
   let birthday = faker.date.between(new Date('1960-01-01'), new Date('1997-01-01'));
   let age = moment().diff(birthday, 'years');
 
+  let firstName = faker.name.firstName();
+  let lastName = faker.name.lastName();
+
   return {
-      ssn: fakeSsn(),
-      birthday: moment(birthday).format('YYYY-MM-DD'),
-      age,
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      avatar: faker.image.avatar(),
-      email: faker.internet.email()
-    };
+    id: uuid(),
+    ssn: fakeSsn(),
+    birthday: moment(birthday).format('YYYY-MM-DD'),
+    age,
+    firstName,
+    lastName,
+    fullName: `${firstName} ${lastName}`,
+    title: faker.name.title(),
+    jobDescriptor: faker.name.jobDescriptor(),
+    jobArea: faker.name.jobArea(),
+    jobType: faker.name.jobType(),
+    avatar: faker.image.avatar(),
+    email: faker.internet.email()
+  };
 };
 
 //console.log(generate());
