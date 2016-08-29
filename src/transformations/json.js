@@ -62,7 +62,7 @@ module.exports = (modify) => (req, res, next) => {
       _end.call(res);
       return;
     } catch(ex) {
-      console.log(ex, data);
+      console.log(ex, '\n', data.toString());
     }
 
     _write.call(res, data);

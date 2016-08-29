@@ -38,15 +38,6 @@ resources:
         properties:
           PLAY_SMART_PROXY_TRAGET: "http://play-smart-proxy-service1.azurewebsites.net/"
         apiVersion: "2015-08-01"
-      -
-        name: web
-        type: config
-        dependsOn:
-          - "[variables('site_id')]"
-        properties:
-          phpVersion: off
-          netFrameworkVersion: "v4.5"
-        apiVersion: "2015-08-01"
 
     apiVersion: "2015-08-01"
     location: "[resourceGroup().location]"

@@ -15,4 +15,4 @@ deploy:
 	git push azure master
 
 console:
-	start https://$(SERVICE_NAME).scm.azurewebsites.net/
+	start "" https://$(SERVICE_NAME).scm.azurewebsites.net/
