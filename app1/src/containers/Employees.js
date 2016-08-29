@@ -13,7 +13,7 @@ class Employees extends Component {
 
   componentWillMount() {
     let self = this;
-    fetch('http://localhost:10010/employee')
+    fetch('http://localhost:10020/employee')
       .then(r => r.json())
       .then(payload => {
         self.setState({

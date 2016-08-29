@@ -8,5 +8,8 @@ SwaggerExpress.create({ appRoot: __dirname }, (err, swaggerExpress) => {
 
   swaggerExpress.register(app);
 
-  app.listen(process.env.PORT || 10010);
+  let port = process.env.PORT || 10010;
+  app.listen(port, () => {
+    console.log(`Service1 server listening on port ${port}`);
+  });
 });
