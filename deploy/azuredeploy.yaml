@@ -1,0 +1,60 @@
+$schema: http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#
+contentVersion: "1.0.0.0"
+parameters:
+  name:
+    type: string
+    defaultValue: play-smart-proxy
+variables:
+  name: "[parameters('name')]"
+  server_farm_name: "[variables('name')]"
+  server_farm_id: "[resourceId('Microsoft.Web/serverfarms', variables('server_farm_name'))]"
+  site_name: "[variables('name')]"
+  site_id: "[resourceId('Microsoft.Web/Sites', variables('site_name'))]"
+resources:
+  -
+    name: "[variables('server_farm_name')]"
+    type: "Microsoft.Web/serverfarms"
+    sku:
+      name: S1
+      tier: Standard
+      capacity: 1
+    properties:
+      name: "[variables('server_farm_name')]"
+      isLinux: false # Really?
+    apiVersion: "2015-02-01"
+    location: "[resourceGroup().location]"
+  -
+    name: "[variables('site_name')]"
+    type: "Microsoft.Web/sites"
+    properties:
+      name: "[variables('site_name')]"
+      serverFarmId: "[variables('server_farm_id')]"
+    resources:
+      -
+        name: appsettings
+        type: config
+        dependsOn:
+          - "[variables('site_id')]"
+        properties:
+          PLAY_SMART_PROXY_TRAGET: "http://play-smart-proxy-service1.azurewebsites.net/"
+        apiVersion: "2015-08-01"
+      -
+        name: web
+        type: config
+        dependsOn:
+          - "[variables('site_id')]"
+        properties:
+          phpVersion: off
+          netFrameworkVersion: "v4.5"
+        apiVersion: "2015-08-01"
+
+    apiVersion: "2015-08-01"
+    location: "[resourceGroup().location]"
+    dependsOn:
+      - "[variables('server_farm_id')]"
+
+
+outputs:
+  git_url:
+    type: string
+    value: "[concat('https://', variables('name'), '.scm.azurewebsites.net/', variables('name'), '.git')]"

@@ -7,8 +7,10 @@ let app = require('connect')();
 
 let transformEmployee = require('./src/employee');
 
+let target = process.env.PLAY_SMART_PROXY_TRAGET || 'http://localhost:10010';
+
 let proxy = httpProxy.createProxyServer({
-  target: 'http://localhost:10010'
+  target
 });
 
 app.use('/employee', transformEmployee);
@@ -23,5 +25,5 @@ app.use((err, req, res, next) => {
 let port = process.env.PORT || 10020;
 
 http.createServer(app).listen(port, () => {
-  console.log(`Proxy server listening on port ${port}`);
+  console.log(`Proxy server listening on port ${port} for target ${target}`);
 });
