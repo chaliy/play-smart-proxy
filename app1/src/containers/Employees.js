@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import EmployeeList from '../components/employees/ListComponent';
 
 class Employees extends Component {
@@ -28,7 +28,5 @@ class Employees extends Component {
     return <EmployeeList data={employees} />;
   }
 }
-
-Employees.propTypes = {};
 
 export default Employees;

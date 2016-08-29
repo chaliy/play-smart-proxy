@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 import Employees from './Employees';
@@ -25,5 +25,4 @@ class App extends Component {
   }
 }
 
-App.propTypes = {};
 export default App;
