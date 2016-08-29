@@ -58,3 +58,6 @@ outputs:
   git_url:
     type: string
     value: "[concat('https://', variables('name'), '.scm.azurewebsites.net/', variables('name'), '.git')]"
+  endpoint_url:
+    type: string
+    value: "[concat('http://', variables('site_name'), '.azurewebsites.net/')]"

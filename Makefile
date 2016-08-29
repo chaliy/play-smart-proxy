@@ -1,6 +1,6 @@
-.PHONY: all
+.PHONY: all, deploy
 
-SERVICE_NAME=play-smart-proxy-service1
+SERVICE_NAME=play-smart-proxy
 
 start:
 	npm start
