@@ -25,6 +25,7 @@ let generate = () => {
     age,
     firstName,
     lastName,
+    phone: faker.phone.phoneNumber(),
     fullName: `${firstName} ${lastName}`,
     title: faker.name.title(),
     jobDescriptor: faker.name.jobDescriptor(),

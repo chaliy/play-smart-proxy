@@ -4,7 +4,7 @@ let MemoryStream = require('memorystream');
 
 module.exports = (modify) => (req, res, next) => {
 
-  if (req.method !== 'get'){
+  if (req.method !== 'GET'){
     return next();
   }
 
@@ -53,11 +53,21 @@ module.exports = (modify) => (req, res, next) => {
   };
 
   let concatWrite = concatStream(data => {
-    let body = JSON.parse(data.toString());
-    body = modify(body, req);
 
-    _write.call(res, JSON.stringify(body));
+    try{
+      let body = JSON.parse(data.toString());
+      body = modify(body, req);
+
+      _write.call(res, JSON.stringify(body));
+      _end.call(res);
+      return;
+    } catch(ex) {
+      console.log(ex, data);
+    }
+
+    _write.call(res, data);
     _end.call(res);
+
   });
 
 

@@ -8,4 +8,4 @@ start:
 	swagger project start
 
 dev:
-	swagger project dev
+	swagger project start
