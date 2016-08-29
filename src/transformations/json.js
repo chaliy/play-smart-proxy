@@ -8,6 +8,9 @@ module.exports = (modify) => (req, res, next) => {
     return next();
   }
 
+  console.log(req);
+  console.log(res);
+
   let _write      = res.write;
   let _end        = res.end;
   let _writeHead  = res.writeHead;
