@@ -33,11 +33,20 @@ resources:
       -
         name: appsettings
         type: config
+        properties:
+          PLAY_SMART_PROXY_TRAGET: "http://play-smart-proxy-service1.azurewebsites.net"
+        apiVersion: "2015-08-01"
         dependsOn:
           - "[variables('site_id')]"
+      -
+        name: web
+        type: config
         properties:
-          PLAY_SMART_PROXY_TRAGET: "http://play-smart-proxy-service1.azurewebsites.net/"
+          phpVersion: off
+          netFrameworkVersion: "v4.5"
         apiVersion: "2015-08-01"
+        dependsOn:
+          - "[variables('site_id')]"
 
     apiVersion: "2015-08-01"
     location: "[resourceGroup().location]"

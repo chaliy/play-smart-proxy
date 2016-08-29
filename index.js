@@ -10,7 +10,12 @@ let transformEmployee = require('./src/employee');
 let target = process.env.PLAY_SMART_PROXY_TRAGET || 'http://localhost:10010';
 
 let proxy = httpProxy.createProxyServer({
-  target
+  target,
+  changeOrigin: true
+});
+
+proxy.on('error', err => {
+  console.log('Proxy Error:', err);
 });
 
 app.use('/employee', transformEmployee);

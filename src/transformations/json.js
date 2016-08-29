@@ -8,9 +8,6 @@ module.exports = (modify) => (req, res, next) => {
     return next();
   }
 
-  console.log(req);
-  console.log(res);
-
   let _write      = res.write;
   let _end        = res.end;
   let _writeHead  = res.writeHead;
@@ -24,7 +21,6 @@ module.exports = (modify) => (req, res, next) => {
   res.writeHead = (code, headers) => {
     contentType = res.getHeader('content-type');
     contentEncoding = res.getHeader('content-encoding');
-
 
     res.removeHeader('Content-Length');
     if (headers) {
@@ -66,6 +62,7 @@ module.exports = (modify) => (req, res, next) => {
       return;
     } catch(ex) {
       console.log(ex);
+      console.log('Data:');
       console.log(data.toString());
     }
 
