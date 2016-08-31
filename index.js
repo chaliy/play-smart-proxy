@@ -2,25 +2,20 @@
 
 let util = require('util');
 let http = require('http');
-let httpProxy = require('http-proxy');
 let app = require('connect')();
-
-let transformEmployee = require('./src/employee');
 
 let target = process.env.PLAY_SMART_PROXY_TRAGET || 'http://localhost:10010';
 
-let proxy = httpProxy.createProxyServer({
+app.use(require('./src/engine/proxies/http')({
   target,
-  changeOrigin: true
-});
+  response: {
+    envelope: require('./src/engine/envelopes/json'),
+    transformers: [
+      require('./src/employee')
+    ]
+  }
+}));
 
-proxy.on('error', err => {
-  console.log('Proxy Error:', err);
-});
-
-app.use('/employee', transformEmployee);
-
-app.use((req, res) => proxy.web(req, res));
 app.use((err, req, res, next) => {
   console.log(err);
   next(err);

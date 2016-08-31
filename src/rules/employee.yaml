@@ -1,0 +1,21 @@
+description: Masking for Employee recods
+rules:
+  -
+    matcher: ssn
+    transformer:
+      type: ssn
+
+  -
+    matcher: birthday
+    transformer:
+      type: birthday
+
+  -
+    matcher: email
+    transformer:
+      type: email
+
+  -
+    matcher: phone
+    transformer:
+      type: phone
