@@ -5,9 +5,7 @@ let https  = require('https');
 let parse_url = require('url').parse;
 
 let forwardedHeaders = req => {
-  return {
-    'x-forwarded-for': req.connection.remoteAddress || req.socket.remoteAddress
-  }
+  return {}
 }
 
 let fullPath = (target, path) => {
