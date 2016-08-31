@@ -9,7 +9,9 @@ rules:
     matcher: birthday
     transformer:
       type: birthday
-
+      range: 10
+      sticky: true
+      salt: d3fw
   -
     matcher: email
     transformer:
