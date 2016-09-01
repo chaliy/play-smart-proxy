@@ -76,7 +76,10 @@ module.exports = options => (req, res, next) => {
 
     } else {
       // Just send everything to response
-      // TODO: Copy headers
+      Object.keys(targetRes.headers).forEach((key) => {
+        res.setHeader(key, targetRes.headers[key]);
+      });
+      res.writeHead(targetRes.statusCode);
       targetRes.pipe(res);
     }
 
