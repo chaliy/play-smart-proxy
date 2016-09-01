@@ -7,10 +7,8 @@ let norm = require('../utils/norm');
  */
 module.exports = options => payload => {
 
-  let { config } = options;
-
   // NOTE: This routine does not chache
-  return norm(config)
+  return norm(options.config)
             .then(masker)
             .then(mask => mask(payload));
 }

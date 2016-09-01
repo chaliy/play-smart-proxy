@@ -1,5 +1,5 @@
 module.exports = input => {
-  if (typeof(input) === 'Function') {
+  if (typeof(input) === 'function') {
     input = input();
   }
 

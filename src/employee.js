@@ -1,5 +1,6 @@
 const config = require('../config');
 const configs = require('./configs');
+const remoteConfigs = require('./engine/configs/documentDb')(config.configs.documentDb);
 const http = require('./engine/proxies/http');
 const json = require('./engine/envelopes/json');
 const masker = require('./engine/transformers/masker');
@@ -11,7 +12,7 @@ module.exports = app => {
       envelope: json,
       transformers: [
         masker({
-          config: configs('employee')
+          config: () => remoteConfigs('employee')
         })
       ]
     }

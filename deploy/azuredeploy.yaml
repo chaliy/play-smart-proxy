@@ -36,6 +36,8 @@ resources:
         type: config
         properties:
           PLAY_SMART_PROXY_TRAGET: "http://play-smart-proxy-service1.azurewebsites.net"
+          PLAY_SMART_PROXY_CONFIG_ENDPOINT: "[reference(concat('Microsoft.DocumentDb/databaseAccounts/', variables('config_db_name'))).documentEndpoint]"
+          PLAY_SMART_PROXY_CONFIG_PRIMARY_KEY: "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('config_db_name')), '2015-04-08').primaryMasterKey]"
         apiVersion: "2015-08-01"
         dependsOn:
           - "[variables('site_id')]"
