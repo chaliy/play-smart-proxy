@@ -2,22 +2,20 @@ description: Masking for Employee recods
 rules:
   -
     matcher: ssn
-    transformer:
+    masker:
       type: ssn
-
   -
     matcher: birthday
-    transformer:
+    masker:
       type: birthday
       range: 10
       sticky: true
       salt: d3fw
   -
     matcher: email
-    transformer:
+    masker:
       type: email
-
   -
     matcher: phone
-    transformer:
+    masker:
       type: phone

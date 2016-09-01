@@ -1,26 +1,26 @@
-let transformers = {
-  ssn: require('./transformers/ssn'),
-  birthday: require('./transformers/birthday'),
-  email: require('./transformers/email'),
-  phone: require('./transformers/phone'),
+let maskers = {
+  ssn: require('./values/ssn'),
+  birthday: require('./values/birthday'),
+  email: require('./values/email'),
+  phone: require('./values/phone'),
 }
 
 let traverse = (o, func) => {
     for (let i in o) {
         o[i] = func(i, o[i]);
-        if (o[i] !== null && typeof(o[i])=="object") {
+        if (o[i] !== null && typeof(o[i]) == 'object') {
             traverse(o[i], func);
         }
     }
 }
 
 let processRule = (value, rule) => {
-  if (value && rule && rule.transformer && rule.transformer.type){
-    let transformerType = rule.transformer.type;
-    if (transformers[transformerType]){
-      let transformer = transformers[transformerType];
+  if (value && rule && rule.masker && rule.masker.type){
+    let maskerType = rule.masker.type;
+    if (maskers[maskerType]){
+      let masker = maskers[maskerType];
 
-      return transformer(value, rule);
+      return masker(value, rule);
     }
   }
   return value;

@@ -3,6 +3,7 @@
 let http   = require('http');
 let https  = require('https');
 let parse_url = require('url').parse;
+let waterfall = require('../utils/waterfall');
 
 let forwardedHeaders = req => {
   return {}
@@ -26,23 +27,10 @@ let request = (req, options) => {
     headers: Object.assign({}, req.headers, forwardedHeaders(req), {
       host: target.host
     }),
-    path: fullPath(target, parse_url(req.url).path)
+    path: fullPath(target, parse_url(req.originalUrl).path)
   };
 
   return transport.request(targetReqOptions);
-}
-
-let responseHandler = options => {
-  if (!options.envelope) throw new Error('response.evnvelope is required');
-
-  let envelope = options.envelope;
-
-  return envelope(payload => {
-    for(let transformer of options.transformers || []){
-      payload = transformer(payload);
-    }
-    return payload;
-  });
 }
 
 /**
@@ -65,7 +53,6 @@ let responseHandler = options => {
  */
 module.exports = options => (req, res, next) => {
 
-
   let targetReq = request(req, options);
 
   let errorHandler = err => {
@@ -80,8 +67,13 @@ module.exports = options => (req, res, next) => {
   targetReq.on('response', targetRes => {
 
     if (options.response){
-      let handleResponse = responseHandler(options.response);
-      handleResponse(targetRes, res);
+      let { envelope, transformers } = options.response;
+      if (!envelope) throw new Error('options.response.envelope is required');
+
+      let modify = payload => waterfall(transformers || [], payload);
+
+      envelope(modify)(targetRes, res);
+
     } else {
       // Just send everything to response
       // TODO: Copy headers

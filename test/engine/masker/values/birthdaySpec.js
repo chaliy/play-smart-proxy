@@ -1,9 +1,9 @@
 'use strict';
 
 let expect = require('chai').expect;
-let birthday = require('../../../src/engine/transformers/birthday');
+let birthday = require('../../../../src/engine/masker/values/birthday');
 
-describe('engine/transformer/birthday', () => {
+describe('engine/maskers/birthday', () => {
 
   it('should randomly map in 60 days range', () => {
 

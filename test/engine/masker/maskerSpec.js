@@ -1,9 +1,9 @@
 'use strict';
 
 let expect = require('chai').expect;
-let transformer = require('../../src/engine/transformer');
+let transformer = require('../../../src/engine/masker');
 
-describe('engine/transformer', () => {
+describe('engine/masker', () => {
 
   let simpleRules = {
     rules: [

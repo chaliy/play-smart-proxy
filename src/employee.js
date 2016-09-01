@@ -1,5 +1,19 @@
-require('require-yaml');
-let rules = require('./rules/employee.yaml');
-let transform = require('./engine/transformer')(rules);
+const config = require('../config');
+const configs = require('./configs');
+const http = require('./engine/proxies/http');
+const json = require('./engine/envelopes/json');
+const masker = require('./engine/transformers/masker');
 
-module.exports = transform;
+module.exports = app => {
+  app.use('/employee', http({
+    target: config.target,
+    response: {
+      envelope: json,
+      transformers: [
+        masker({
+          config: configs('employee')
+        })
+      ]
+    }
+  }));
+}

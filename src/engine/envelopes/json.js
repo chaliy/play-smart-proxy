@@ -25,16 +25,20 @@ module.exports = modify => (targetRes, res) => {
     try{
       let body = JSON.parse(data.toString());
 
-      let result = modify({
-        body
-      });
+      Promise
+        .resolve(modify({
+          body
+        }))
+        .then(result => {
+          res.write(JSON.stringify(result));
+          res.end();
+        })
+        .catch(console.log);
 
-      res.write(JSON.stringify(result));
-      res.end();
+
     } catch(ex) {
       console.log(ex);
-      console.log('Data:');
-      console.log(data.toString());
+      console.log('Data: ', data.toString());
     }
 
   });

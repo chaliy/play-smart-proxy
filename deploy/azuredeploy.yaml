@@ -10,6 +10,8 @@ variables:
   server_farm_id: "[resourceId('Microsoft.Web/serverfarms', variables('server_farm_name'))]"
   site_name: "[variables('name')]"
   site_id: "[resourceId('Microsoft.Web/Sites', variables('site_name'))]"
+  config_db_name: "[concat(variables('name'), '-config')]"
+  config_db__id: "[resourceId('Microsoft.DocumentDb/databaseAccounts', variables('config_db_name'))]"
 resources:
   -
     name: "[variables('server_farm_name')]"
@@ -20,7 +22,6 @@ resources:
       capacity: 1
     properties:
       name: "[variables('server_farm_name')]"
-      isLinux: false # Really?
     apiVersion: "2015-02-01"
     location: "[resourceGroup().location]"
   -
@@ -60,6 +61,20 @@ resources:
     dependsOn:
       - "[variables('server_farm_id')]"
 
+  -
+    type: "Microsoft.DocumentDb/databaseAccounts"
+    name: "[variables('config_db_name')]"
+    kind: GlobalDocumentDB
+    properties:
+      name: "[variables('config_db_name')]"
+      databaseAccountOfferType: Standard
+      locations:
+        -
+          id: "[concat(variables('config_db_name'), '-', resourceGroup().location)]"
+          failoverPriority: 0
+          locationName: "West Europe"
+    apiVersion: "2015-04-08"
+    location: "[resourceGroup().location]"
 
 outputs:
   git_url:
@@ -68,3 +83,9 @@ outputs:
   endpoint_url:
     type: string
     value: "[concat('http://', variables('site_name'), '.azurewebsites.net/')]"
+  config_db_endpoint:
+    type: string
+    value: "[reference(concat('Microsoft.DocumentDb/databaseAccounts/', variables('config_db_name'))).documentEndpoint]"
+  config_db_primary_key:
+    type: string
+    value: "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('config_db_name')), '2015-04-08').primaryMasterKey]"
